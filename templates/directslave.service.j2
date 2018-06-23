@@ -1,0 +1,15 @@
+[Unit]
+Description=directslave service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart={{ directslave_service_file_path }} --run
+PIDFile={{ directslave_pid_file_path }}
+KillSignal=SIGQUIT
+KillMode=mixed
+User={{ directslave_user }}
+Group={{ directslave_group }}
+
+[Install]
+WantedBy=multi-user.target

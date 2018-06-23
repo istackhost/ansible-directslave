@@ -1,0 +1,15 @@
+---
+- name: Download DirectSlave
+  unarchive:
+    src: "{{ directslave_download_url }}"
+    dest: "{{ directslave_install_dir }}"
+    remote_src: yes
+    extra_opts: --strip-components=1
+    creates: "{{ directslave_service_file_path }}"
+
+- name: Change file permission of DirectSlave installation directory
+  file:
+    dest: "{{ directslave_install_dir }}"
+    owner: "{{ directslave_user }}"
+    group: "{{ directslave_group }}"
+    recurse: yes

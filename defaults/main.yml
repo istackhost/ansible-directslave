@@ -1,0 +1,51 @@
+---
+# Package
+directslave_version: 3.2-advanced-all
+directslave_download_url: "https://directslave.com/download/directslave-{{ directslave_version }}.tar.gz"
+
+# Search files config
+directslave_search_config_path: "{{ playbook_dir }}/files/groups/{{ item }}/directslave"
+directslave_search_config_paths: []
+directslave_host_config_file_path: "{{ directslave_host_config_path | default(inventory_hostname) }}/directslave.conf.j2"
+directslave_host_config_ssl_path: "{{ directslave_host_config_path | default(inventory_hostname) }}/ssl"
+
+# App config path
+directslave_config_path: /usr/local/directslave
+directslave_install_dir: "{{ directslave_config_path }}"
+directslave_service_file_path: "{{ directslave_config_path }}/bin/directslave-linux-amd64"
+directslave_config_file_path: "{{ directslave_config_path }}/etc/directslave.conf"
+directslave_pid_file_path: "{{ directslave_config_path }}/run/directslave.pid"
+directslave_log_access_file_path: "{{ directslave_config_path }}/log/access.log"
+directslave_log_error_file_path: "{{ directslave_config_path }}/log/error.log"
+directslave_log_action_file_path: "{{ directslave_config_path }}/log/action.log"
+
+# App user
+directslave_user: bind
+directslave_group: bind
+
+directslave_standalone: false
+
+# Credentials
+directslave_app_credentials:
+  - username: admin
+    password: CHANGEME
+
+# App config
+directslave_app_debug: false
+directslave_app_background: true
+directslave_app_host: "*"
+directslave_app_port: 2222
+directslave_app_sslport: 2224
+directslave_app_ssl: false
+directslave_app_ssl_cert_file_name: fullchain.pem
+directslave_app_ssl_key_file_name: key.pem
+directslave_app_ssl_cert_file_path: "{{ directslave_config_path }}/ssl/{{ directslave_app_ssl_cert_file_name }}"
+directslave_app_ssl_key_file_path: "{{ directslave_config_path }}/ssl/{{ directslave_app_ssl_key_file_name }}"
+directslave_cookie_sess_id: DS_SESSID
+directslave_cookie_auth_key: CHANGEME
+directslave_named_secondary_work_dir: /etc/bind/secondary
+directslave_named_secondary_config_file_path: "{{ directslave_named_secondary_work_dir }}/named.conf"
+directslave_rndc_file_path: /usr/sbin/rndc
+directslave_named_retry_time: 1200
+directslave_named_format: text
+directslave_named_auth_file_path: "{{ directslave_config_path }}/etc/passwd"

@@ -1,0 +1,37 @@
+---
+- name: Set list of path to look for local directslave configuration directory
+  set_fact:
+    directslave_search_config_paths: "{{ directslave_search_config_paths }} + [ '{{ directslave_search_config_path }}' ]"
+  with_items: "{{ group_names }}"
+
+- name: Check if directslave configuration directory exists
+  stat:
+    path: "{{ item }}"
+  register: directslave_config_check
+  become: false
+  delegate_to: 127.0.0.1
+  with_first_found:
+    - files: "{{ directslave_search_config_paths }}"
+      skip: true
+
+- name: Set directslave configuration directory
+  set_fact:
+    directslave_host_config_path: "{{ directslave_config_check.results[0].stat.path }}"
+  when:
+    - directslave_config_check.results[0] is defined
+    - directslave_config_check.results[0].stat is defined
+    - directslave_config_check.results[0].stat.isdir
+
+- name: Check if directslave template configuration file is exists
+  stat:
+    path: "{{ directslave_host_config_file_path }}"
+  become: false
+  delegate_to: 127.0.0.1
+  register: directslave_config_check
+
+- name: Check if directslave ssl directory is exists
+  stat:
+    path: "{{ directslave_host_config_ssl_path }}"
+  become: false
+  delegate_to: 127.0.0.1
+  register: directslave_config_ssl_check

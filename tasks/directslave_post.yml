@@ -1,0 +1,63 @@
+---
+- block: # Setup UID and GID
+  - name: Find {{ directslave_user }} UID
+    command: id -u {{ directslave_user }}
+    register: output_directslave_user_id
+
+  - name: Find {{ directslave_group }} GID
+    command: id -g {{ directslave_group }}
+    register: output_directslave_group_id
+
+  - name: Register a fact for UID and GID
+    set_fact:
+      directslave_uid: "{{ output_directslave_user_id.stdout }}"
+      directslave_gid: "{{ output_directslave_group_id.stdout }}"
+
+- block: # Configuration
+  - name: Drop directslave configuration file
+    template:
+      src: directslave.conf.j2
+      dest: "{{ directslave_config_file_path }}"
+    when: not directslave_config_check.stat.exists
+    notify: Restart DirectSlave
+  
+  - name: Copy directslave configuration file
+    template:
+      src: "{{ directslave_host_config_file_path }}"
+      dest: "{{ directslave_config_file_path }}"
+      owner: root
+      group: root
+      mode: 0644
+    when: directslave_config_check.stat.exists
+    notify: Restart DirectSlave
+
+  - name: Copy SSL certificates directory
+    copy:
+      src: "{{ directslave_host_config_path }}/ssl"
+      dest: "{{ directslave_config_path }}/"
+    when:
+      - directslave_config_ssl_check.stat.isdir is defined
+      - directslave_config_ssl_check.stat.isdir
+
+- block: # Service configuration
+  - name: Create DirectSlave Systemd Unit file
+    template:
+      src: directslave.service.j2
+      dest: /lib/systemd/system/directslave.service
+      mode: 0644
+    register: directslave_systemd
+
+  - name: Ensure DirectSlave started and enabled
+    systemd:
+      name: directslave
+      state: started
+      enabled: yes
+      daemon_reload: yes
+
+- block: # Add user
+  - name: Add directslave credential
+    no_log: yes
+    command: "{{ directslave_service_file_path }} --password {{ item.username }}:{{ item.password }}"
+    with_items: "{{ directslave_app_credentials }}"
+    notify: Restart DirectSlave
+

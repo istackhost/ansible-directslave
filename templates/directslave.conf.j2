@@ -1,0 +1,32 @@
+background 	{{ directslave_app_background | ternary('1', '0') }}
+
+host  		{{ directslave_app_host }}
+
+port  		{{ directslave_app_port }}
+sslport		{{ directslave_app_sslport }}
+
+ssl				{{ directslave_app_ssl | ternary('on', 'off') }}
+ssl_cert	{{ directslave_app_ssl_cert_file_path }}
+ssl_key		{{ directslave_app_ssl_key_file_path }}
+
+cookie_sess_id  {{ directslave_cookie_sess_id }}
+cookie_auth_key {{ directslave_cookie_auth_key }}
+
+debug		{{ directslave_app_debug | ternary('1', '0') }}
+uid  		{{ directslave_uid }}
+gid 		{{ directslave_gid }}
+
+pid	  			{{ directslave_pid_file_path }}
+access_log	{{ directslave_log_access_file_path }}
+error_log		{{ directslave_log_error_file_path }}
+action_log	{{ directslave_log_action_file_path }}
+
+named_workdir	{{ directslave_named_secondary_work_dir }}
+named_conf		{{ directslave_named_secondary_config_file_path }}
+retry_time		{{ directslave_named_retry_time }}
+rndc_path			{{ directslave_rndc_file_path }}
+named_format  {{ directslave_named_format }}
+
+authfile	{{ directslave_named_auth_file_path }}
+
+# `allow` directive removed, please, use your local firewall.

@@ -1,0 +1,9 @@
+---
+- include_tasks: directslave_pre.yml
+- include_tasks: directslave_install.yml
+
+- block: # Config
+  - include_tasks: directslave_search_config.yml
+  - include_tasks: directslave_post.yml
+  tags:
+    - directslave-config
