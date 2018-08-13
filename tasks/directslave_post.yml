@@ -20,7 +20,7 @@
       dest: "{{ directslave_config_file_path }}"
     when: not directslave_config_check.stat.exists
     notify: Restart DirectSlave
-  
+
   - name: Copy directslave configuration file
     template:
       src: "{{ directslave_host_config_file_path }}"
