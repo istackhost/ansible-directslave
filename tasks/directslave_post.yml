@@ -60,4 +60,3 @@
     command: "{{ directslave_service_file_path }} --password {{ item.username }}:{{ item.password }}"
     with_items: "{{ directslave_app_credentials }}"
     notify: Restart DirectSlave
-
