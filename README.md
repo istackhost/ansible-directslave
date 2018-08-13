@@ -14,13 +14,13 @@ None.
 
 ## Dependencies
 
-1. istackhost.bind9 (BIND9 or NAMED)
+1. overskylab.bind9
 
 ## Example Playbook
 
     - hosts: all
       roles:
-        - istackhost.directslave
+        - overskylab.directslave
 
 
 ## License
@@ -29,4 +29,4 @@ MIT
 
 ## Author Information
 
-iStackhost
+Teerawat Namsricharoensuk
