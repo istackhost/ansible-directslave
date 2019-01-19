@@ -1,18 +1,20 @@
 ---
-# - name: Add DirectSlave Group
-#   group:
-#     name: "{{ directslave_group }}"
-
-# - name: Add DirectSlave User
-#   user:
-#     name: "{{ directslave_user }}"
-#     group: "{{ directslave_group }}"
-#     shell: /bin/bash
-#     home: "{{ directslave_install_dir }}"
-
-- name: Ensure secondary {{ directslave_user }} work directory created
+- name: Ensure {{ directslave_config_path }} directory created
   file:
-    path: "{{ directslave_named_secondary_work_dir }}"
+    path: "{{ directslave_config_path }}"
     state: directory
     owner: "{{ directslave_user }}"
     group: "{{ directslave_group }}"
+
+- name: Check if {{ directslave_passwd_file_path }} file exists
+  stat:
+    path: "{{ directslave_passwd_file_path }}"
+  register: directslave_passwd_check
+
+- name: Ensure {{ directslave_passwd_file_path }} file created
+  file:
+    path: "{{ directslave_passwd_file_path }}"
+    state: touch
+    owner: "{{ directslave_user }}"
+    group: "{{ directslave_group }}"
+  when: not directslave_passwd_check.stat.exists

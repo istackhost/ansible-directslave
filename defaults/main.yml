@@ -14,6 +14,7 @@ directslave_config_path: /usr/local/directslave
 directslave_install_dir: "{{ directslave_config_path }}"
 directslave_service_file_path: "{{ directslave_config_path }}/bin/directslave-linux-amd64"
 directslave_config_file_path: "{{ directslave_config_path }}/etc/directslave.conf"
+directslave_passwd_file_path: "{{ directslave_config_path }}/etc/passwd"
 directslave_pid_file_path: "{{ directslave_config_path }}/run/directslave.pid"
 directslave_log_access_file_path: "{{ directslave_config_path }}/log/access.log"
 directslave_log_error_file_path: "{{ directslave_config_path }}/log/error.log"

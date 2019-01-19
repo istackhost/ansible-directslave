@@ -56,7 +56,7 @@
 
 - block: # Add user
   - name: Add directslave credential
-    no_log: yes
     command: "{{ directslave_service_file_path }} --password {{ item.username }}:{{ item.password }}"
+    no_log: yes
     with_items: "{{ directslave_app_credentials }}"
     notify: Restart DirectSlave
