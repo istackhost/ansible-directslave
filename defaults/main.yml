@@ -37,10 +37,8 @@ directslave_app_host: "*"
 directslave_app_port: 2222
 directslave_app_sslport: 2224
 directslave_app_ssl: false
-directslave_app_ssl_cert_file_name: fullchain.pem
-directslave_app_ssl_key_file_name: key.pem
-directslave_app_ssl_cert_file_path: "{{ directslave_config_path }}/ssl/{{ directslave_app_ssl_cert_file_name }}"
-directslave_app_ssl_key_file_path: "{{ directslave_config_path }}/ssl/{{ directslave_app_ssl_key_file_name }}"
+directslave_app_ssl_cert_file_path: "{{ directslave_config_path }}/ssl/fullchain.pem"
+directslave_app_ssl_key_file_path: "{{ directslave_config_path }}/ssl/key.pem"
 directslave_cookie_sess_id: DS_SESSID
 directslave_cookie_auth_key: CHANGEME
 directslave_named_secondary_work_dir: /etc/bind/secondary
