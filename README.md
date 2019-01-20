@@ -20,7 +20,7 @@ None.
 
     - hosts: all
       roles:
-        - overskylab.directslave
+        - ansible-directslave
 
 
 ## License
